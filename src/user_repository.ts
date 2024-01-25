@@ -1,7 +1,7 @@
 import { User } from './user';
 import { db } from './database';
-import { UserResult, UserInsert } from './types';
-export async function getDBUsers(): Promise<User[]>{
+import { UserResult } from './types';
+export async function getRepositoryUsers(): Promise<User[]>{
     return db
         .selectFrom('users')
         .selectAll()
@@ -9,9 +9,10 @@ export async function getDBUsers(): Promise<User[]>{
         .then(toDomainUsers)
 }
 
-export async function addDBUser(user: User) : Promise<User> {
+export async function addRepositoryUser(user: User) : Promise<User> {
     const values = {
-        username: user.username
+        name: user.name,
+        email: user.email
     }
 
     return db
@@ -25,9 +26,10 @@ function toDomainUsers(result: UserResult[]) {
     return result.map(toDomainUser);
 }
 function toDomainUser(row: UserResult) {
-    console.log("Mapping user to domain: " + row)
     return new User(
         row.id,
-        row.username
+        row.name,
+        row.email,
+        row.created_at
     );
 }

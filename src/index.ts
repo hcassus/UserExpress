@@ -14,15 +14,17 @@ app.use(cors())
 app.post('/users', (req: Request, res: Response) => {
   const user = req.body
   addUser(user)
-      .then((user : User) => res.send(user).status(201))
-      .catch(() => res.send({}).status(500))
+      .then((userId: string) => res.send(userId).status(201))
+      .catch((err) => {
+        res.status(500).send(err.message)
+      })
 
 });
 
 app.get('/users', (req: Request, res: Response) => {
   getUsers()
       .then((users: User[]) => res.send(users).status(200))
-      .catch(() => res.send({}).status(500))
+      .catch((reason) => res.status(500).send(reason))
 });
 
 const port = process.env.PORT || 3111;

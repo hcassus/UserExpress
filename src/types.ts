@@ -12,8 +12,9 @@ export interface Database {
 
 export interface UserTable {
     id: Generated<string>
-    username: string
-    // created_at: ColumnType<Date, string | undefined, never>
+    name: string
+    email: string
+    created_at: ColumnType<Date, string | undefined, never>
 }
 
 export type UserResult = Selectable<UserTable>
